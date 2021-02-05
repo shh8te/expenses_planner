@@ -12,6 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        accentColor: Colors.black,
+        fontFamily: 'Quicksand',
+      ),
       home: MyHomePage(),
     );
   }
@@ -24,14 +29,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(id: 1, title: 'New Shoes', amount: 39.99, date: DateTime.now()),
-    Transaction(
-        id: 2, title: 'New T-short', amount: 69.99, date: DateTime.now()),
+    // Transaction(id: 1, title: 'New Shoes', amount: 39.99, date: DateTime.now()),
+    // Transaction(
+    //     id: 2, title: 'New T-short', amount: 69.99, date: DateTime.now()),
   ];
 
   void _addNewTransaction(String title, double amount) {
     final newTx = Transaction(
-        id: _userTransactions.last.id++,
+        id: _userTransactions.isEmpty ? 0 : _userTransactions.last.id++,
         title: title,
         amount: amount,
         date: DateTime.now());
@@ -53,7 +58,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
         title: Text('Flutter App'),
         actions: <Widget>[
           IconButton(
@@ -70,7 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Card(
                 child: Text('chart!'),
                 elevation: 5,
-                color: Colors.green,
               ),
             ),
             TransactionList(_userTransactions),

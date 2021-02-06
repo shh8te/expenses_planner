@@ -4,6 +4,7 @@ import 'package:expenses_planner/models/transaction.dart';
 
 import 'package:expenses_planner/widgets/transaction_list.dart';
 import 'package:expenses_planner/widgets/new_transaction.dart';
+import 'package:expenses_planner/widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,6 +34,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // Transaction(
     //     id: 2, title: 'New T-short', amount: 69.99, date: DateTime.now()),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions
+        .where((element) =>
+            element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+        .toList();
+  }
 
   void _addNewTransaction(String title, double amount) {
     final newTx = Transaction(
@@ -69,13 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text('chart!'),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions),
           ],
         ),

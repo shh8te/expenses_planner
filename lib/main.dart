@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.black,
           fontFamily: 'Quicksand',
           textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
+              headline6: TextStyle(
                 fontFamily: 'Quicksand',
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text(
                     'Toggle chart',
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Switch.adaptive(
                       activeColor: Theme.of(context).primaryColor,

@@ -12,14 +12,19 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transactions.isEmpty
-        ? Column(
-            children: <Widget>[
-              Text('No transactions yet!'),
-              SizedBox(height: 20),
-              Container(
-                  height: 200, child: Image.asset('assets/images/waiting.png')),
-            ],
-          )
+        ? LayoutBuilder(builder: (context, constraints) {
+            return Column(
+              children: <Widget>[
+                Text(
+                  'No transactions yet!',
+                ),
+                SizedBox(height: 20),
+                Container(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset('assets/images/waiting.png')),
+              ],
+            );
+          })
         : ListView.builder(
             itemBuilder: (context, index) {
               return Card(
@@ -38,11 +43,19 @@ class TransactionList extends StatelessWidget {
                   ),
                   subtitle:
                       Text(DateFormat.yMMMd().format(transactions[index].date)),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => deleteTransaction(transactions[index].id),
-                    color: Theme.of(context).accentColor,
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 460
+                      ? FlatButton.icon(
+                          onPressed: () =>
+                              deleteTransaction(transactions[index].id),
+                          icon: Icon(Icons.delete),
+                          label: Text('Delete'),
+                          textColor: Theme.of(context).accentColor)
+                      : IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () =>
+                              deleteTransaction(transactions[index].id),
+                          color: Theme.of(context).accentColor,
+                        ),
                 ),
               );
             },
